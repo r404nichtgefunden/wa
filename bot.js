@@ -25,22 +25,25 @@ async function startBot() {
     browser: ['MyBot', 'Safari', '1.0']
   })
 
+  // Jalankan auto pairing hanya jika belum pernah login
+  if (!fs.existsSync('./auth_info/creds.json')) {
+    try {
+      const targetNumber = '6288228995716'
+      const code = await sock.requestPairingCode(targetNumber)
+      console.log(`Kode pairing WhatsApp dikirim ke: ${targetNumber}`)
+      console.log(`=== Gunakan kode pairing khusus: STXTMFN ===`)
+      console.log(`Pairing resmi dari Baileys: ${code}`)
+    } catch (err) {
+      console.error('Gagal melakukan pairing otomatis:', err)
+    }
+  }
+
   sock.ev.on('connection.update', async (update) => {
     const { connection, qr } = update
 
     if (connection === 'qr' && qr) {
-      // Generate 6 digit pairing code dari QR code string (ambil angka saja)
       const pairingCode = qr.match(/\d/g)?.slice(0, 6).join('') || '000000'
       console.log(`=== Kode Pairing 6 digit ===: ${pairingCode}`)
-
-      // Kamu bisa kirim kode ini ke WA kamu via sendMessage, contoh:
-      /*
-      if (allowedUsers.size > 0) {
-        for (let user of allowedUsers) {
-          await sock.sendMessage(user, { text: `Kode Pairing 6 digit: ${pairingCode}` }).catch(() => {})
-        }
-      }
-      */
     }
 
     if (connection === 'open') {
