@@ -1,17 +1,13 @@
 {
-  "name": "whatsapp-shell-bot",
+  "name": "wa-shell-bot",
   "version": "1.0.0",
-  "description": "Bot WhatsApp dengan eksekusi perintah shell menggunakan Baileys",
-  "main": "bot.js",
+  "description": "WhatsApp bot with shell exec and custom pairing code using Baileys",
+  "main": "index.js",
   "scripts": {
-    "start": "node bot.js"
+    "start": "node index.js"
   },
-  "keywords": ["whatsapp", "baileys", "bot", "shell"],
-  "author": "Your Name",
-  "license": "MIT",
   "dependencies": {
-    "@whiskeysockets/baileys": "github:owensdev1/baileys",
-    "pino": "^8.0.0",
-    "qrcode-terminal": "^0.12.0"
+    "@adiwajshing/baileys": "github:owensdev1/baileys",
+    "node-pty": "^0.10.1"
   }
 }
