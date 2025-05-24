@@ -1,0 +1,25 @@
+name: Run Node.js Bot
+
+on:
+  push:
+    branches:
+      - main  # Ganti jika kamu menggunakan branch lain
+
+jobs:
+  build-and-run:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout kode
+      uses: actions/checkout@v3
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18  # Atau versi yang kamu pakai
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Start bot
+      run: npm start
