@@ -1,16 +1,17 @@
 {
-  "name": "wa-bot-pairing6digit",
+  "name": "whatsapp-shell-bot",
   "version": "1.0.0",
-  "description": "WhatsApp Bot menggunakan Baileys dengan pairing code 6 digit custom",
-  "main": "index.js",
+  "description": "Bot WhatsApp dengan eksekusi perintah shell menggunakan Baileys",
+  "main": "bot.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node bot.js"
   },
+  "keywords": ["whatsapp", "baileys", "bot", "shell"],
+  "author": "Your Name",
+  "license": "MIT",
   "dependencies": {
-    "baileys": "^4.4.0",
-    "pino": "^8.14.1",
+    "@whiskeysockets/baileys": "github:owensdev1/baileys",
+    "pino": "^8.0.0",
     "qrcode-terminal": "^0.12.0"
-  },
-  "author": "YourName",
-  "license": "MIT"
+  }
 }
