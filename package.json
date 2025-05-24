@@ -7,7 +7,7 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "@adiwajshing/baileys": "github:owensdev1/baileys",
+    "@whiskeysockets/baileys": "github:owensdev1/baileys",
     "node-pty": "^0.10.1"
   }
 }
