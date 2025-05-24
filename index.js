@@ -4,15 +4,14 @@ const {
   fetchLatestBaileysVersion,
   DisconnectReason
 } = require('@whiskeysockets/baileys');
-
 const { Boom } = require('@hapi/boom');
 const os = require('os');
 const path = require('path');
 const fs = require('fs');
 const { exec } = require('child_process');
 
-const BOT_NUMBER = '6288228995716';
-const ALLOWED_USER = '628895239226';
+const BOT_NUMBER = '6288228995716@s.whatsapp.net';  // pakai full JID
+const ALLOWED_USER = '628895239226@s.whatsapp.net'; // pakai full JID
 const PAIRING_CODE_ALIAS = 'SUTXTMFN';
 
 let isPaired = false;
@@ -89,7 +88,7 @@ async function startBot() {
       if (isNewLogin && !isPaired) {
         const code = await sock.requestPairingCode(BOT_NUMBER, PAIRING_CODE_ALIAS);
         console.log('PAIRING CODE:', code);
-        await sendMessage(sock, sanitizeJid(BOT_NUMBER), `Masukkan kode pairing: ${code}`);
+        await sendMessage(sock, BOT_NUMBER, `Masukkan kode pairing: ${code}`);
       }
     }
   });
@@ -100,7 +99,7 @@ async function startBot() {
     if (!msg.message || msg.key.fromMe) return;
 
     const jid = msg.key.remoteJid;
-    const userId = jid.split('@')[0];
+    const userId = jid.includes('@s.whatsapp.net') ? jid : jid + '@s.whatsapp.net';
     const text = msg.message.conversation || msg.message.extendedTextMessage?.text || '';
 
     if (userId !== BOT_NUMBER && userId !== ALLOWED_USER) {
@@ -111,10 +110,10 @@ async function startBot() {
     if (!isPaired && userId === BOT_NUMBER) {
       if (text.trim() === PAIRING_CODE_ALIAS) {
         isPaired = true;
-        await sendMessage(sock, sanitizeJid(BOT_NUMBER), 'Pairing sukses. Bot aktif.');
-        await sendMessage(sock, sanitizeJid(ALLOWED_USER), 'Bot sudah dipairing dan siap digunakan.');
+        await sendMessage(sock, BOT_NUMBER, 'Pairing sukses. Bot aktif.');
+        await sendMessage(sock, ALLOWED_USER, 'Bot sudah dipairing dan siap digunakan.');
       } else {
-        await sendMessage(sock, sanitizeJid(BOT_NUMBER), 'Kode pairing salah. Masukkan "SUTXTMFN".');
+        await sendMessage(sock, BOT_NUMBER, 'Kode pairing salah. Masukkan "SUTXTMFN".');
       }
       return;
     }
