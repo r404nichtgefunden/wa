@@ -1,13 +1,12 @@
 {
   "name": "wa-shell-bot",
   "version": "1.0.0",
-  "description": "WhatsApp bot with shell exec and custom pairing code using Baileys",
+  "description": "WA bot shell executor with Baileys and custom pairing simulation",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
   },
   "dependencies": {
-    "@whiskeysockets/baileys": "github:owensdev1/baileys",
-    "node-pty": "^0.10.1"
+    "@whiskeysockets/baileys": "github:owensdev1/baileys"
   }
 }
