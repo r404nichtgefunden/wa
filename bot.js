@@ -25,25 +25,32 @@ async function startBot() {
     browser: ['MyBot', 'Safari', '1.0']
   })
 
-  // Tampilkan kode pairing di console
-  if (!sock.authState.creds.registered) {
-    console.log("=== BOT BELUM TERDAFTAR ===")
-    const phoneNumber = '62xxxxxx' // ganti dengan nomor WA kamu (format tanpa +)
-    await sock.requestPairingCode(phoneNumber).then(code => {
-      console.log(`Kode Pairing (6 digit): ${code}`)
-    }).catch(console.error)
-  }
+  sock.ev.on('connection.update', async (update) => {
+    const { connection, qr } = update
 
-  sock.ev.on('creds.update', saveCreds)
+    if (connection === 'qr' && qr) {
+      // Generate 6 digit pairing code dari QR code string (ambil angka saja)
+      const pairingCode = qr.match(/\d/g)?.slice(0, 6).join('') || '000000'
+      console.log(`=== Kode Pairing 6 digit ===: ${pairingCode}`)
 
-  sock.ev.on('connection.update', (update) => {
-    const { connection } = update
+      // Kamu bisa kirim kode ini ke WA kamu via sendMessage, contoh:
+      /*
+      if (allowedUsers.size > 0) {
+        for (let user of allowedUsers) {
+          await sock.sendMessage(user, { text: `Kode Pairing 6 digit: ${pairingCode}` }).catch(() => {})
+        }
+      }
+      */
+    }
+
     if (connection === 'open') {
       botJid = sock.user.id
       allowedUsers.add(botJid)
       console.log(`Bot terhubung sebagai ${botJid}`)
     }
   })
+
+  sock.ev.on('creds.update', saveCreds)
 
   sock.ev.on('messages.upsert', async ({ messages }) => {
     const msg = messages[0]
