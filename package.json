@@ -1,0 +1,13 @@
+{
+  "name": "wa-shell-bot",
+  "version": "2.0.0",
+  "description": "WhatsApp bot shell executor with pairing code login (using baileys latest)",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node bot.js"
+  },
+  "dependencies": {
+    "baileys": "^6.17.16",
+    "pino": "^8.0.0"
+  }
+}
